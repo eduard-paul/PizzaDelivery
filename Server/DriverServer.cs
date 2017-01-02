@@ -26,11 +26,9 @@ namespace ServerApp
             mDatabase = database;
             mOrderQueue = new ConcurrentQueue<Order>();
 
-            mBranchLocations.Add(22);
-            mBranchLocations.Add(26);
-            mBranchLocations.Add(62);
-            mBranchLocations.Add(66);
-            mBranchLocations.Add(44);
+            foreach (int position in Map.getBranchLocations()) {
+                mBranchLocations.Add(position);
+            }
         }
 
         public int RegisterDriver(int driverId, int positionId)

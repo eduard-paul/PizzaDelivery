@@ -1,21 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ServerApp.DriverServer" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="3.25" Y="1" Width="1.5" />
+    <Members>
+      <Method Name="DriverServer" Hidden="true" />
+      <Field Name="freeDrivers" Hidden="true" />
+      <Field Name="mBranchLocations" Hidden="true" />
+      <Method Name="SendOrders" Hidden="true" />
+    </Members>
+    <AssociationLine Name="mMap" Type="ServerApp.Map" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="3.25" Y="3.128" />
+        <Point X="1.25" Y="3.128" />
+        <Point X="1.25" Y="3.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="mDatabase" Type="ServerApp.IDatabase" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="2.875" />
+        <Point X="6.5" Y="2.875" />
+        <Point X="6.5" Y="3.25" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AMgAAhAAAAADAEBAAAAAAAAAAAIAAAAAAAIBAAAAACA=</HashCode>
       <FileName>DriverServer.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Field Name="mMap" />
       <Field Name="mDatabase" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Field Name="mDrivers" />
+      <Field Name="mOrderQueue" />
     </ShowAsCollectionAssociation>
     <Lollipop Position="1.098" />
   </Class>
   <Class Name="ServerApp.ManagerServer" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Position X="8.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQBAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ManagerServer.cs</FileName>
@@ -26,7 +48,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ServerApp.Driver">
-    <Position X="3" Y="1.5" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAAAAABAAAAAAAAAAAAgAAAAAgAAgA=</HashCode>
       <FileName>DriverServer.cs</FileName>
@@ -35,12 +57,32 @@
       <Field Name="connection" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="ServerApp.Map">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Members>
+      <Method Name="Map" Hidden="true" />
+      <Method Name="pathToArray" Hidden="true" />
+      <Method Name="printDejkster" Hidden="true" />
+      <Method Name="startNewDejkster" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAQBAABAAAAAAAAEBAAAEgAIAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeliveryPizzaLib.Manager.Order">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+  </Class>
   <Interface Name="DeliveryPizzaLib.Driver.IDriverClient">
-    <Position X="5.5" Y="2.75" Width="1.5" />
+    <Position X="8.25" Y="1.25" Width="1.5" />
     <TypeIdentifier />
   </Interface>
-  <Interface Name="ServerApp.IDatabase" Collapsed="true">
-    <Position X="3" Y="0.5" Width="1.5" />
+  <Interface Name="ServerApp.IDatabase">
+    <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAKAAAAAAAAAAAAAAAAAAAAAgAAAQAAAAAAIBAAAA=</HashCode>
       <FileName>IDatabase.cs</FileName>

@@ -11,11 +11,12 @@ namespace ServerApp
     public class Map
     {
         public const int Size = 10;
+        private static int[] branchLocations = {22, 26, 62, 66, 44};
         private Dictionary<int, DejkstraAlgorim> calculatedDejksters = new Dictionary<int,DejkstraAlgorim>();
-
-        public Map()
-        {
-            //for (int id = 0; id < Size * Size; id++)
+                                                                                                             
+        public Map()                                                                                         
+        {                                                                                                    
+            //for (int id = 0; id < Size * Size; id++)                                                       
             //{
             //    Console.WriteLine(getName(id));
             //}
@@ -78,6 +79,11 @@ namespace ServerApp
 
         public string getName(int pointId) {
             return "[" + (pointId / Size) + "," + (pointId % Size) + "]";
+        }
+
+        public static int[] getBranchLocations()
+        {
+            return branchLocations;
         }
 
         public int getDist(int p1, int p2)
