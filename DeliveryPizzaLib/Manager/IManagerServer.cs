@@ -12,7 +12,7 @@ namespace DeliveryPizzaLib.Manager
     [ScsService(Version = "1.0.0.0")]
     public interface IManagerServer
     {
-        Statistics GetStatistics(DateTime startDate, DateTime endDate);
+        Statistics GetStatistics(DateTime? startDate, DateTime? endDate);
         Recommendations GetRecommendations();
     }
 }

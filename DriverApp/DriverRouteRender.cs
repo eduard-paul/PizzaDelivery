@@ -8,31 +8,26 @@ using System.Threading.Tasks;
 
 namespace DriverApp
 {
-    public class RoutePresenter : IRoutePresenter
+    public class DriverRouteRender : IRouteRender
     {
         private Route _route;
 
-        public RoutePresenter(Route route)
+        public DriverRouteRender(Route route)
         {
             _route = route;
         }
 
-        string IRoutePresenter.GetPizza()
-        {
-            return _route.pizzaType.ToString();
-        }
-
-        string IRoutePresenter.GetRouteToBase()
+        string IRouteRender.GetRouteToBaseRender()
         {
             return GetRoutePath(0, FindBasePosition() - 1);
         }
 
-        string IRoutePresenter.GetRouteToAddress()
+        string IRouteRender.GetRouteToAddressRender()
         {
             return GetRoutePath(FindBasePosition(), _route._pointIndexes.Length-1);
         }
 
-        string IRoutePresenter.GetFullRoute()
+        string IRouteRender.GetFullRouteRender()
         {
             return GetRoutePath(0, _route._pointIndexes.Length - 1);
         }

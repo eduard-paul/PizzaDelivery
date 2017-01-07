@@ -18,17 +18,34 @@ namespace ServerApp
             this.database = database;
         }
 
-        public Statistics GetStatistics(DateTime dateBegin, DateTime dateEnd)
+        Statistics IManagerServer.GetStatistics(DateTime? dateBegin, DateTime? dateEnd)
         {
             Console.WriteLine("GetStatistics");
             if (database != null)
             {
-                return new Statistics(database.getBetween(dateBegin, dateEnd).ToArray());
+                List<Order> orders = null;
+                if (dateBegin == null && dateEnd == null)
+                {
+                    orders = database.getAll();
+                }
+                else if (dateBegin != null && dateBegin == null)
+                {
+                    orders = database.getAfter(dateBegin.Value);
+                }
+                else if (dateBegin == null && dateEnd != null)
+                {
+                    orders = database.getBefore(dateEnd.Value);
+                }
+                else
+                {
+                    orders = database.getBetween(dateBegin.Value, dateEnd.Value);
+                }
+                return new Statistics(orders.ToArray());
             }
             return new Statistics();
         }
 
-        public Recommendations GetRecommendations()
+        Recommendations IManagerServer.GetRecommendations()
         {
             Console.WriteLine("GetRecommendations");
             KeyValuePair<int,int>[] rpms = new KeyValuePair<int,int>[3];

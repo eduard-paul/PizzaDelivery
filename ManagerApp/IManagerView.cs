@@ -10,10 +10,6 @@ namespace ManagerApp
 {
     public interface IManagerView
     {
-        DateTime GetStartDate();
-
-        DateTime GetEndDate();
-
         void OnStatisticsUpdate(Statistics stat);
 
         void OnRecommendationsUpdate(Recommendations recommend);

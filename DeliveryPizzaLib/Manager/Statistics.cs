@@ -19,5 +19,10 @@ namespace DeliveryPizzaLib.Manager
         {
             this.orders = null;
         }
+
+        public Order[] GetOrders()
+        {
+            return this.orders;
+        }
     }
 }

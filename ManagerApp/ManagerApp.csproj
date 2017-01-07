@@ -62,19 +62,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="IStatisticsView.cs" />
+    <Compile Include="ManagerDataPresenters.cs" />
+    <Compile Include="ManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ManagerForm.Designer.cs">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsFull.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatisticsFull.Designer.cs">
+      <DependentUpon>StatisticsFull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsDates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatisticsDates.Designer.cs">
+      <DependentUpon>StatisticsDates.cs</DependentUpon>
     </Compile>
     <Compile Include="IManagerPresenter.cs" />
     <Compile Include="IManagerView.cs" />
     <Compile Include="ManagerPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="StatisticsViewBase.cs" />
+    <EmbeddedResource Include="ManagerForm.resx">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatisticsFull.resx">
+      <DependentUpon>StatisticsFull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatisticsDates.resx">
+      <DependentUpon>StatisticsDates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

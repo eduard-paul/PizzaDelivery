@@ -82,11 +82,13 @@ namespace DriverApp
             }
             else
             {
-                IRoutePresenter rp = new RoutePresenter(_route);
+                IRouteRender rr = new DriverRouteRender(_route);
+                IPizzaRender pr = new DriverPizzaRender(_route.pizzaType);
+
                 labelStatus.Text = "доставка";
-                pizzaType.Text = rp.GetPizza();
-                routeToBase.Text = rp.GetRouteToBase();
-                routeToAddress.Text = rp.GetRouteToAddress();
+                pizzaType.Text = pr.Render();
+                routeToBase.Text = rr.GetRouteToBaseRender();
+                routeToAddress.Text = rr.GetRouteToAddressRender();
             }
         }
 

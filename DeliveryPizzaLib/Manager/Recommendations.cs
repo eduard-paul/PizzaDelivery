@@ -16,6 +16,11 @@ namespace DeliveryPizzaLib.Manager
             this.replacements = replacements;
         }
 
+        public KeyValuePair<int, int>[] GetReplacements()
+        {
+            return replacements;
+        }
+
         public override string ToString()
         {
             string s = "[ ";
