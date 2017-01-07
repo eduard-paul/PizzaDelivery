@@ -30,8 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.driverCode = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRegister = new System.Windows.Forms.Button();
+            this.authStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -50,31 +50,32 @@
             this.driverCode.Size = new System.Drawing.Size(257, 20);
             this.driverCode.TabIndex = 1;
             // 
-            // button1
+            // btnRegister
             // 
-            this.button1.Location = new System.Drawing.Point(12, 63);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Получить персональный код";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnRegister.Location = new System.Drawing.Point(214, 63);
+            this.btnRegister.Name = "btnRegister";
+            this.btnRegister.Size = new System.Drawing.Size(170, 23);
+            this.btnRegister.TabIndex = 3;
+            this.btnRegister.Text = "Зарегистрироваться";
+            this.btnRegister.UseVisualStyleBackColor = true;
+            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
-            // button2
+            // authStatus
             // 
-            this.button2.Location = new System.Drawing.Point(214, 63);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(170, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Зарегистрироваться";
-            this.button2.UseVisualStyleBackColor = true;
+            this.authStatus.AutoSize = true;
+            this.authStatus.Location = new System.Drawing.Point(12, 68);
+            this.authStatus.Name = "authStatus";
+            this.authStatus.Size = new System.Drawing.Size(47, 13);
+            this.authStatus.TabIndex = 4;
+            this.authStatus.Text = "<status>";
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(396, 102);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.authStatus);
+            this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.driverCode);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -89,8 +90,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox driverCode;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-
+        private System.Windows.Forms.Button btnRegister;
+        private System.Windows.Forms.Label authStatus;
     }
 }

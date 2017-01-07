@@ -10,11 +10,49 @@ using System.Windows.Forms;
 
 namespace DriverApp
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : Form, IDriverConnectionListener
     {
-        public LoginForm()
+        IDriverPresenter _presenter;
+
+        public LoginForm(IDriverPresenter presenter)
         {
             InitializeComponent();
+
+            authStatus.Text = "";
+
+            _presenter = presenter;
+            _presenter.AddConnectionListener(this);
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            _presenter.RegisterDriver(GetDriverId());
+        }
+
+        public int GetDriverId()
+        {
+            if (driverCode.Text.Length > 0)
+            {
+                return Int32.Parse(driverCode.Text);
+            }
+            return 0;
+        }
+
+        public void OnConnected()
+        {
+            authStatus.Text = "Успешная авторизация";
+            DialogResult = DialogResult.OK;
+            Dispose();
+        }
+
+        public void OnDisconnected()
+        {
+            authStatus.Text = "Код не зарегистрирован";
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _presenter.RemoveConnectionListener(this);
         }
     }
 }

@@ -16,21 +16,25 @@ namespace DriverApp
         private const string defaultIP = "127.0.0.1";
         private const int defaultPort = 10047;
 
-        private IDriverView _view;
         private IScsServiceClient<IDriverServer> _scsClient;
         private IDriverServer _server;
 
+        private LinkedList<IDriverConnectionListener> _connectionListeners;
+        private IDriverOrderListener _orderListener;
+
         private int _driverId = INVALID_DRIVER_ID;
 
-        public DriverPresenter(IDriverView view)
+        public DriverPresenter()
         {
-            _view = view;
+            _connectionListeners = new LinkedList<IDriverConnectionListener>();
         }
 
-        void IDriverPresenter.OnRegisterDriver()
+        void IDriverPresenter.RegisterDriver(int driverID)
         {
             try
             {
+                _driverId = driverID;
+
                 DriverClient listener = new DriverClient(this);
                 _scsClient = ScsServiceClientBuilder.CreateClient<IDriverServer>(
                     new ScsTcpEndPoint(defaultIP, defaultPort), listener);
@@ -38,28 +42,26 @@ namespace DriverApp
 
                 _server = _scsClient.ServiceProxy;
 
-                _driverId = _view.GetDriverId();
-
                 if (_driverId != INVALID_DRIVER_ID)
                 {
                     _server.RegisterDriver(_driverId, 0);
-                    _view.OnConnected();
+                    NotifyConnected();
                 }
                 else
                 {
                     _scsClient = null;
-                    _view.OnDisconnected();
+                    NotifyDisconnected();
                 }
             }
 
             catch (Exception)
             {
                 _scsClient = null;
-                _view.OnDisconnected();
+                NotifyDisconnected();
             }
         }
 
-        void IDriverPresenter.OnUnregisterDriver()
+        void IDriverPresenter.UnregisterDriver()
         {
             if (_scsClient != null)
             {
@@ -67,7 +69,7 @@ namespace DriverApp
                 _scsClient.Disconnect();
                 _scsClient = null;
 
-                _view.OnDisconnected();
+                NotifyDisconnected();
             }
         }
 
@@ -78,6 +80,36 @@ namespace DriverApp
                 _server.Delivered(_driverId);
             }
         }
+        void IDriverPresenter.AddConnectionListener(IDriverConnectionListener connectionListener)
+        {
+            _connectionListeners.AddLast(connectionListener);
+        }
+
+        void IDriverPresenter.RemoveConnectionListener(IDriverConnectionListener connectionListener)
+        {
+            _connectionListeners.Remove(connectionListener);
+        }
+
+        void IDriverPresenter.SetOrderListener(IDriverOrderListener orderListener)
+        {
+            _orderListener = orderListener;
+        }
+
+        void NotifyConnected()
+        {
+            foreach (IDriverConnectionListener listener in _connectionListeners)
+            {
+                listener.OnConnected();
+            }
+        }
+
+        void NotifyDisconnected()
+        {
+            foreach (IDriverConnectionListener listener in _connectionListeners)
+            {
+                listener.OnDisconnected();
+            }
+        }
 
         void IDriverClient.OnOrderReceived()
         {
@@ -85,9 +117,9 @@ namespace DriverApp
             {
                 Route route = _server.GetRoute(_driverId);
 
-                if (route != null)
+                if (route != null && _orderListener != null)
                 {
-                    _view.OnOrderReceived(route);
+                    _orderListener.OnOrderReceived(route);
                 }
 
             }

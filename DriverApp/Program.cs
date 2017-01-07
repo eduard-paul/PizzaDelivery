@@ -16,7 +16,15 @@ namespace DriverApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DriverAppForm());
+
+            IDriverPresenter driverPresenter = new DriverPresenter();
+            LoginForm loginForm = new LoginForm(driverPresenter);
+
+            DialogResult result = loginForm.ShowDialog();
+            if (DialogResult.OK == result)
+            {
+                Application.Run(new DriverAppForm(driverPresenter));
+            }
         }
     }
 }

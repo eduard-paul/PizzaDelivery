@@ -9,58 +9,98 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using DeliveryPizzaLib.Driver;
+using DeliveryPizzaLib;
 
 namespace DriverApp
 {
-    public partial class DriverAppForm : Form, IDriverView
+    public partial class DriverAppForm : Form, IDriverConnectionListener, IDriverOrderListener
     {
         private const int INVALID_DRIVER_ID = -1;
 
         private IDriverPresenter _presenter;
 
-        public DriverAppForm()
+        private bool _logoutInProgress = false;
+
+        Route _route;
+
+        public DriverAppForm(IDriverPresenter presenter)
         {
             InitializeComponent();
-            _presenter = new DriverPresenter(this);
+
+            labelStatus.Text = "Свободен";
+            pizzaType.Text = "";
+            routeToBase.Text = "";
+            routeToAddress.Text = "";
+
+            _presenter = presenter;
+            _presenter.AddConnectionListener(this);
+            _presenter.SetOrderListener(this);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        void IDriverOrderListener.OnOrderReceived(Route route)
         {
-            _presenter.OnRegisterDriver();
+            _route = route;
+
+            Invoke(new OrderReceivedDelegate(OnOrderReceivedInternal));
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        void IDriverConnectionListener.OnConnected()
+        {
+            //stub
+        }
+
+        void IDriverConnectionListener.OnDisconnected()
+        {
+            Invoke(new OnDisconnectedDelegate(onDisconnectedInternal));
+        }
+
+        private void btnDelivered_Click(object sender, EventArgs e)
         {
             _presenter.OnPizzaDelivered();
+
+            _route = null;
+            OnOrderReceivedInternal();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
-            _presenter.OnUnregisterDriver();       
+            _logoutInProgress = true;
+            _presenter.UnregisterDriver();
         }
 
-        void IDriverView.OnDisconnected()
-        {
-            // stub
-        }
+        public delegate void OrderReceivedDelegate();
+        public delegate void OnDisconnectedDelegate();
 
-        void IDriverView.OnConnected()
+        private void OnOrderReceivedInternal()
         {
-            // stub
-        }
-
-        void IDriverView.OnOrderReceived(Route route)
-        {
-            if (route != null)
+            if (_route == null)
             {
-                System.Console.WriteLine(route.ToString());
+                labelStatus.Text = "Свободен";
+                pizzaType.Text = "";
+                routeToBase.Text = "";
+                routeToAddress.Text = "";
             }
-            // stub
+            else
+            {
+                IRoutePresenter rp = new RoutePresenter(_route);
+                labelStatus.Text = "доставка";
+                pizzaType.Text = rp.GetPizza();
+                routeToBase.Text = rp.GetRouteToBase();
+                routeToAddress.Text = rp.GetRouteToAddress();
+            }
         }
 
-        int IDriverView.GetDriverId()
+        private void onDisconnectedInternal()
         {
-            return Int32.Parse(textBox1.Text);
+            if (_logoutInProgress)
+            {
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Соединение с сервером разорвано", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
         }
     }
 }

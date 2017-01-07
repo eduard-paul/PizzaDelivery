@@ -54,8 +54,9 @@
       <DependentUpon>DriverAppForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DriverPresenter.cs" />
+    <Compile Include="IDriverConnectionListener.cs" />
     <Compile Include="IDriverPresenter.cs" />
-    <Compile Include="IDriverView.cs" />
+    <Compile Include="IDriverOrderListener.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +65,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoutePresenter.cs" />
     <EmbeddedResource Include="DriverAppForm.resx">
       <DependentUpon>DriverAppForm.cs</DependentUpon>
     </EmbeddedResource>
