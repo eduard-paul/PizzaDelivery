@@ -11,7 +11,9 @@ namespace ServerApp
     interface IDatabase
     {
         void put(Order order);
-        List<Order> getSince(DateTime time);
+        List<Order> getAll();
+        List<Order> getAfter(DateTime time);
+        List<Order> getBefore(DateTime time);
         List<Order> getBetween(DateTime start, DateTime end);
         List<Order> getByDriverId(int id);
         List<Order> getByBranchId(int id);

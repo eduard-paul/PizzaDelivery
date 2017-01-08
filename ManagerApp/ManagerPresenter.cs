@@ -23,16 +23,17 @@ namespace ManagerApp
             _view = view;
         }
 
-        public void OnGetStatistics()
+        void IManagerPresenter.GetStatistics(DateTime? startDate, DateTime? endDate)
         {
             var scsClient = ScsServiceClientBuilder.CreateClient<IManagerServer>(
                     new ScsTcpEndPoint(defaultIP, defaultPort), this);
             Statistics stat = scsClient.ServiceProxy.
-                GetStatistics(_view.GetStartDate(), _view.GetEndDate());
+                GetStatistics(startDate, endDate);
+
             _view.OnStatisticsUpdate(stat);
         }
 
-        public void OnGetRecommendations()
+        void IManagerPresenter.OnGetRecommendations()
         {
             var scsClient = ScsServiceClientBuilder.CreateClient<IManagerServer>(
                     new ScsTcpEndPoint(defaultIP, defaultPort), this);

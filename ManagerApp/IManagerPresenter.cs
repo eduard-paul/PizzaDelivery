@@ -8,7 +8,7 @@ namespace ManagerApp
 {
     public interface IManagerPresenter
     {
-        void OnGetStatistics();
+        void GetStatistics(DateTime? startDate, DateTime? endDate);
 
         void OnGetRecommendations();
     }

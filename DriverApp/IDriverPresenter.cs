@@ -8,10 +8,16 @@ namespace DriverApp
 {
     public interface IDriverPresenter
     {
-        void OnRegisterDriver();
+        void RegisterDriver(int driverID);
 
-        void OnUnregisterDriver();
+        void UnregisterDriver();
 
         void OnPizzaDelivered();
+
+        void AddConnectionListener(IDriverConnectionListener connectionListener);
+
+        void RemoveConnectionListener(IDriverConnectionListener connectionListener);
+
+        void SetOrderListener(IDriverOrderListener orderListener);
     }
 }
