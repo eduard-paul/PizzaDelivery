@@ -42,9 +42,8 @@ namespace DriverApp
 
                 _server = _scsClient.ServiceProxy;
 
-                if (_driverId != INVALID_DRIVER_ID)
+                if (_driverId != INVALID_DRIVER_ID && _server.RegisterDriver(_driverId, 0) == 0)
                 {
-                    _server.RegisterDriver(_driverId, 0);
                     NotifyConnected();
                 }
                 else
